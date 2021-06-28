@@ -1,0 +1,41 @@
+version: '3'
+services:
+  reverse-proxy:
+    image: nginx:1.15-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8080:8080
+    networks:
+      - infinite-shiny
+  app:
+    image: cervang/bddshow
+    environment:
+      - NAME_BDD=rr2021
+      - USER=cervan
+      - PASSWORD=password
+      - HOST=cervangirard.me:5432
+      - URL_API=infinite-shiny:9223
+    networks:
+      - infinite-shiny
+  app2:
+    image: cervang/bddshow
+    environment:
+      - POSTGRES_DB=rr2021
+      - POSTGRES_USER=cervan
+      - POSTGRES_PASSWORD=password
+      - HOST=cervangirard.me:5432
+      - URL_API=infinite-shiny:9223
+    networks:
+      - infinite-shiny
+
+  api:
+    container-name: api
+    image: cervang/bddshowapi
+    networks:
+      - infinite-shiny
+
+
+networks:
+  infinite-shiny:
+    name: infinite-shiny
