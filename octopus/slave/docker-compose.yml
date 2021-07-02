@@ -12,15 +12,19 @@ services:
   app:
     image: cervang/bddshow
     env_file:
-      - ../.env_1
+      - ../../.env_1
     networks:
       - infinite_shiny
+    volumes:
+      - /home/ubuntu/cached-plot:/home/cached-plot
   app2:
     image: cervang/bddshow
     env_file:
-      - ../.env_1
+      - ../../.env_1
     networks:
       - infinite_shiny
+    volumes:
+      - /home/ubuntu/cached-plot:/home/cached-plot
 
   api:
     image: cervang/bddshowapi
